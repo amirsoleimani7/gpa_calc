@@ -18,17 +18,17 @@ def login_page(request):
             user_obj = User.objects.filter(username=username)
             if not user_obj.exists():
                 messages.error(request , 'username not found')
-                return redirect('/accounts/login/')
+                return redirect('lgoin')
             user_obj = authenticate(username=username , password=password)
             if user_obj :
                 login(request , user_obj)
                 return redirect('receipts')
             messages.error(request , "wrong password")
-            return redirect('/accounts/login')
+            return redirect('login')
         except Exception as e:
             messages.error(request , "something went wrong")
             print(f"the error is : {e}")
-            return redirect("/accounts/login/")
+            return redirect("login")
     return render(request , "login.html")
 
 
@@ -41,15 +41,15 @@ def register_page(request):
             user_obj = User.objects.filter(username=username)
             if user_obj.exists():
                 messages.error(request , 'username is taken')
-                return redirect('/accounts/register/')
+                return redirect('register')
             user_obj = User.objects.create(username=username)
             user_obj.set_password(password)
             user_obj.save()
             messages.success(request , 'account created!')
-            return redirect("/accounts/login/")
+            return redirect("login")
         except Exception as e:
             messages.error(request , "something went wrong")
-            return redirect("/accounts/register/")
+            return redirect("register")
     return render(request , 'register.html')
 
 def custom_logout(requets):
