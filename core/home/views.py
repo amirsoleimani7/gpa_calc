@@ -1,14 +1,16 @@
 from django.shortcuts import render , redirect , HttpResponse
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate , login , logout
-
 from django.contrib import messages
-
-
 
 def home(request):
     return HttpResponse("sup!")
 
+
+@login_required(login_url='/accounts/login/')
+def main_page(request):
+    return render(request,'main_page.html')
 
 def login_page(request):
     if request.method == 'POST':
@@ -22,7 +24,7 @@ def login_page(request):
             user_obj = authenticate(username=username , password=password)
             if user_obj :
                 login(request , user_obj)
-                return redirect('receipts')
+                return redirect('main_page')
             messages.error(request , "wrong password")
             return redirect('login')
         except Exception as e:
