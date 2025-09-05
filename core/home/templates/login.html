@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% if messages %}
+    {% for msg in messages %}
+        {{ msg }}
+    {% endfor %}
+    {% endif %}
+
+
+    <form action="" method="post"">
+        {% csrf_token %}
+        <input type="text" name="username" placeholder="enter user name"> <br>
+        <input type="text" name="password" placeholder="enter your password"> <br>
+        <button type="submit">login</button>
+    </form>
+
+
+    <a href="{% url 'register' %}">register</a>
+
+</body>
+</html>
