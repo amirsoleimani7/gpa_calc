@@ -5,10 +5,102 @@ from django.contrib.auth import authenticate , login , logout
 from django.contrib import messages
 from .models import Subject
 
+
+from django.http import FileResponse
+import io 
+from reportlab.pdfgen import canvas
+from reportlab.lib.units import inch 
+from reportlab.lib.pagesizes import letter
+
+
+
+
+GRADE_POINTS = {
+    'A' : 9,
+    'S' : 10,
+    'B' : 8,
+    'C' : 7,
+    'D' : 6,
+    'F' : 0,
+}
+
 def home(request):
     return HttpResponse("sup!")
 
 
+
+def generate_pdf(request):
+
+    buf = io.BytesIO()
+
+    c = canvas.Canvas(buf , pagesize=letter ,bottomup=0)
+
+    textob = c.beginText()
+    textob.setTextOrigin(inch , inch)
+    textob.setFont('Helvetica' ,14)
+
+    query_user = request.user
+    subjects_of_the_user = Subject.objects.filter(user=query_user)
+
+    total_credits = 0
+    total_grade = 0
+
+    for subject in subjects_of_the_user:
+        total_credits += subject.credits
+        total_grade += GRADE_POINTS[subject.grade]
+
+
+    lines = [
+    ]
+
+    for subject  in subjects_of_the_user : 
+        lines.append(f"{subject.name} , {subject.grade} , {subject.credits}")
+        
+    lines.append(f"cgpa is : {total_grade / total_credits}")
+
+
+    for line in lines:
+        textob.textLine(line )
+
+    c.drawText(textob)
+    c.showPage()
+
+    c.save()
+    buf.seek(0)
+
+    return FileResponse(buf , as_attachment=True , filename='cgpa_report.pdf')
+
+
+
+
+
+
+
+
+
+
+@login_required(login_url='/accounts/login/')
+def result_page(request):
+
+    query_user = request.user
+    subjects_of_the_user = Subject.objects.filter(user=query_user)
+
+    total_credits = 0
+    total_grade = 0
+
+    for subject in subjects_of_the_user:
+        total_credits += subject.credits
+        total_grade += GRADE_POINTS[subject.grade]
+
+    context = {
+        'query_subjects' : subjects_of_the_user , 
+        'cgpa' : total_grade / total_credits , 
+    }
+    
+    return render(request , 'result_page.html' , context)
+
+
+@login_required(login_url='/accounts/login/')
 def update_subject(request , pk):
 
     if request.method == 'POST':  
@@ -45,6 +137,8 @@ def update_subject(request , pk):
 
     return render(request , 'update_subject.html' , context)
 
+
+@login_required(login_url='/accounts/login/')
 def delete_subject(request , pk):
     query_object = get_object_or_404(Subject , pk=pk)
     try : 
@@ -53,7 +147,6 @@ def delete_subject(request , pk):
     except Exception as e:
         messages.error(request , 'some exceptions happened !')
         return redirect('main_page')
-
 
 
 
