@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>update subject</title>
+</head>
+<body>
+    {% if messages %}
+    {% for msg in messages %}
+    {{msg}}
+    {% endfor %}
+    {% endif %}
+
+    {% if subject %}
+        <p>we found the subject</p>
+        {{subject.name}} <br>
+        {{subject.grade}} <br>
+        {{subject.credits}} <br>
+    {% else %}
+        <p>subject was not found</p>
+    {% endif %}
+    <a href="{% url 'main_page' %}">back</a>
+</body>
+</html>
