@@ -13,13 +13,17 @@ def update_subject(request , pk):
 
     if request.method == 'POST':  
         try : 
-            query_subject = Subject.objects.filter(pk=pk) # geting that object i guess              
+            query_subject = Subject.objects.filter(pk=pk)[0] # geting that object i guess              
             new_name = request.POST.get('new_name')
             new_grade= request.POST.get('new_grade')
             new_credits = request.POST.get('new_credits')
-            if not query_subject.exists(): 
+            print(f"new_name : {new_name}")
+            print(f"new_grade : {new_grade}")
+            print(f"new_credits : {new_credits}")
+
+            if not query_subject: 
                 messages.error(request, "the subject was not found !")     
-                return redirect('update_subject')
+                return redirect('update_subject' , pk=pk)
             else: 
                 print("the query ws found!")
                 query_subject.name = new_name
@@ -27,27 +31,19 @@ def update_subject(request , pk):
                 query_subject.credits = new_credits
                 query_subject.save()
                 messages.success(request,"the subject was updated")
-                return redirect('update_subject')
+                return redirect('update_subject' , pk=pk)
         except Exception as e:
             print(f"the error is : {e}")
             print("some exception happened !")
-   
-    
-    query_subject = Subject.objects.filter(pk=pk)[0] # geting that object i guess              
-    
-    print(f"the user {query_subject.user} , name is : {query_subject.name} , grade  : {query_subject.grade}")
+            messages.error(request , 'some errors happend!')
 
+    query_subject = Subject.objects.filter(pk=pk)[0] # geting that object i guess              
+    print(f"the user {query_subject.user} , name is : {query_subject.name} , grade  : {query_subject.grade}")
     context = {
         'subject' : query_subject
     }
 
     return render(request , 'update_subject.html' , context)
-
-
-
-
-
-
 
 @login_required(login_url='/accounts/login/')
 def main_page(request):
