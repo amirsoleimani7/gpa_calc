@@ -1,4 +1,4 @@
-from django.shortcuts import render , redirect , HttpResponse
+from django.shortcuts import render , redirect , HttpResponse , get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate , login , logout
@@ -44,6 +44,18 @@ def update_subject(request , pk):
     }
 
     return render(request , 'update_subject.html' , context)
+
+def delete_subject(request , pk):
+    query_object = get_object_or_404(Subject , pk=pk)
+    try : 
+        query_object.delete()
+        return redirect('main_page')
+    except Exception as e:
+        messages.error(request , 'some exceptions happened !')
+        return redirect('main_page')
+
+
+
 
 @login_required(login_url='/accounts/login/')
 def main_page(request):

@@ -64,6 +64,7 @@
         <td>{{subject.grade}}</td>
         <td>{{subject.credits}}</td>
         <td><a href="{% url 'update_subject' subject.pk %}">edit</a></td> 
+        <td><a href="{% url 'delete_subject' subject.pk %}">delete</a></td> 
     </tr>
     {% endfor %}
     </table>
