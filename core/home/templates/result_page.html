@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        table, th, td {
+            border: 1px solid;
+        }
+    </style>
+</head>
+<body>
+
+    <a href="{% url 'main_page' %}">main_page</a>
+
+
+    {% if query_subjects %}
+    <table>
+        <tr>
+            <td>name</td>
+            <td>grade</td>
+            <td>credits</td>
+        </tr>
+    {% for subject in query_subjects %} <br>
+    <tr>
+        <td>{{subject.name}}</td>
+        <td>{{subject.grade}}</td>
+        <td>{{subject.credits}}</td>
+    </tr>
+    {% endfor %}
+    </table>
+    {% else %}
+        no subject added yet <br>
+    {% endif %}
+
+    {% if cgpa %}
+        CGPA : {{cgpa}}
+    {% else %}
+        error happend for result 
+    {% endif %}
+
+    <a href="{% url 'generation_pdf'  %}">generating pdf</a>
+
+</body>
+</html>

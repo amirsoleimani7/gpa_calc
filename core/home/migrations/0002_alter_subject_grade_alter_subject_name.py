@@ -8,7 +8,7 @@ class Migration(migrations.Migration):
     dependencies = [
         ('home', '0001_initial'),
     ]
-
+    
     operations = [
         migrations.AlterField(
             model_name='subject',

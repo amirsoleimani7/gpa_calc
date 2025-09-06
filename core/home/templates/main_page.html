@@ -6,15 +6,16 @@
     <title>mainage</title>
 
     <style>
-        body {text-align: center;}
         table, th, td {
             border: 1px solid;
+        }
+        .adding_subject {
+            text-align: left;
         }
 
     </style>
 </head>
 <body>
-
     <!-- showing messges/erroer that is sent from the backend-->
     {% if messages %}
     {% for msg in messages %}
@@ -29,15 +30,19 @@
     <div class='adding_subject'>
         <form action="" method="POST">
             {% csrf_token %}
-            <input type="text" name="name" placeholder="enter name of the subject"> <br>
-            <select name="grade" id="grade"> 
+            <label for="name">Subject Name : </label>
+            <input id="name" type="text" name="name"> <br>
+            <label for="grade">Subject Grade</label>
+            <select name="grade" id="grade">
+                <option value="S">S</option> 
                 <option value="A">A</option>
                 <option value="B">B</option>
                 <option value="C">C</option>
                 <option value="D">D</option>
                 <option value="F">F</option>
             </select> <br>
-            <select name="credits" id="credts"> <br>
+            <label for="credits">Subject Credits</label>
+            <select name="credits" id="credits"> <br>
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -48,9 +53,6 @@
     </div>
 
 
-
-
-    </table>
     {% if all_subjects %}
     <table>
         <tr>
@@ -71,6 +73,6 @@
     {% else %}
         no subject added yet <br>
     {% endif %}
-
+    <a href="{% url 'result_page' %}">result</a>
 </body>
 </html>
