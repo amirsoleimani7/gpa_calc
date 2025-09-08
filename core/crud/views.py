@@ -19,10 +19,19 @@ def main_page(request):
     
     try : 
         if request.method == 'POST':
-            if request.POST.get('recipe_name') and request.POST.get('recipe_description') and request.POST.get('image') : 
+            print(f" user is : {request.user}")
+            print(f"recipe name is : {request.POST.get('recipe_name')}")
+            print(f"recipe_description is : {request.POST.get("recipe_description")}")
+            if request.FILES.get('image'):
+                print("file exits")
+            else : 
+                print(f"file is not there !")
+
+
+            if request.POST.get('recipe_name') and request.POST.get('recipe_description') and request.FILES.get('image') : 
                 recipe_name = request.POST.get('recipe_name') 
-                recipe_description = request.POST.get('recipe_desciption')
-                image = request.POST.get('image')
+                recipe_description = request.POST.get('recipe_description')
+                image = request.FILES['image']
                 user = request.user
 
                 recipe_obj = Recipe.objects.create( user=user , 
@@ -31,11 +40,16 @@ def main_page(request):
                                                     recipe_image = image)
                 recipe_obj.save()
                 messages.success(request , f'the recipe saved !')
+                return redirect('main_page')
 
             if request.POST.get('search'):
                 search_item = request.POST.get('search')
                 print(f"the search item is : {search_item}")
                 all_reciptes = Recipe.objects.filter(recipe_name__icontains=search_item)
+
+
+
+
 
     except Exception as e: 
         messages.error(request , f"some error happend  : {e}")
