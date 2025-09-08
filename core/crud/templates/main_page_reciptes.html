@@ -44,6 +44,7 @@
             <b>{{recipe.recipe_name}}</b> <br>
             {{recipe.recipe_description}} <br>
             <a href="{% url 'delete_recipe' recipe.pk %}">delete</a>
+            <a href="{% url 'update_recipe' recipe.pk %}">update</a>
         {% endfor %}
         {% else %}
             <p>no reciptes found</p>

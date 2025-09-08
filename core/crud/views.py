@@ -55,8 +55,25 @@ def main_page(request):
     context = {
         'all_reciptes' : all_reciptes
     }
-    
+
     return render(request , 'main_page_reciptes.html' , context)
+
+def update_recipe(request , pk):
+
+    recipe_obj = Recipe.objects.get(pk=pk)   # better than filter()[0]
+
+    if request.method == 'POST':
+
+        if request.POST.get('new_name') : 
+           recipe_obj.recipe_name = request.POST.get('new_name')
+        if request.POST.get('new_description') : 
+            recipe_obj.recipe_description = request.POST.get('new_description')
+        if request.FILES.get('new_image') : 
+            recipe_obj.recipe_image = request.FILES['new_image']
+
+        recipe_obj.save()
+
+    return render(request , 'update_page.html')
 
 
 def delete_recipe(request , pk):

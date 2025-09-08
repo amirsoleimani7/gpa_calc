@@ -5,5 +5,6 @@ from . import views
 
 urlpatterns = [
     path('' , views.main_page , name='main_page') ,
-    path('delete/<int:pk>/' , views.delete_recipe , name='delete_recipe')
+    path('update/<int:pk>/' , views.update_recipe , name='update_recipe') , 
+    path('delete/<int:pk>/' , views.delete_recipe , name='delete_recipe') , 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
