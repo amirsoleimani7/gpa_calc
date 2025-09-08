@@ -6,10 +6,11 @@
     <title>update page</title>
 </head>
 <body>
-    
-
-
-
+    {% if messages %}
+    {% for msg in messages %}
+        {{msg}}
+    {% endfor %}
+    {% endif %}
 
     <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}

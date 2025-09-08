@@ -72,6 +72,7 @@ def update_recipe(request , pk):
             recipe_obj.recipe_image = request.FILES['new_image']
 
         recipe_obj.save()
+        messages.success(request , f'recipe updated !')
 
     return render(request , 'update_page.html')
 
