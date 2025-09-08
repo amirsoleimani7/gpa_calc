@@ -9,11 +9,11 @@ class Recipe(models.Model):
     recipe_description = models.TextField()
     recipe_image = models.ImageField(upload_to='recipes')
     recipe_view_count = models.PositiveIntegerField(default=1)
-
+    
 
     def __str__(self):
         return self.recipe_name
     
 
-    
+
 

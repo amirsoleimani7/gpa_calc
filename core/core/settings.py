@@ -28,6 +28,12 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+
+import os
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR , 'core' ,'recipes')
+
+
 # Application definition
 
 INSTALLED_APPS = [

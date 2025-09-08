@@ -6,20 +6,29 @@
     <title>main_page</title>
 </head>
 <body>
-    <div class="reciptes">
-        {% if all_reciptes %}
-        {% for recipe in all_reciptes %}
-            {{recipe.name}}
-            {{recipe.recipe_name}}
-            {{recipe.recipe_description}}
-            # add some iamge here as well <br>
+    <div class="messages">
+        {% if messages %}
+        {% for msg in messages %}
+            {{msg}}
         {% endfor %}
-        {% else %}
-            <p>no reciptes found</p>
         {% endif %}
-        
     </div>
+    
+    <form action="" method="post">
+        {% csrf_token %}
+        <label for="recipe_name">Recipe Name : </label>
+        <input type="text" name="recipe_name"  id="recipe_name"> <br>
 
+        <label for="recipe_description">description : </label>
+        <input type="text" name="recipe_description"  id="recipe_description"> <br>
+        
+        <label for="image">Image : </label>
+        <input type="image" name="image"  id="image">
+
+        <button type="submit"> add </button>
+
+    </form>
+    <hr>
     <form action="" method="post">
         {% csrf_token %}
         <label for="search">search by name : </label>
@@ -28,6 +37,20 @@
     </form>
 
 
+    <div class="reciptes">
+        {% if all_reciptes %}
+        {% for recipe in all_reciptes %} <br>
+            <img src="{{ recipe.recipe_image.url }} " alt="not found!" width="200px" height="200px"> <br>
+            <b>{{recipe.recipe_name}}</b> <br>
+            {{recipe.recipe_description}}
+        {% endfor %}
+        {% else %}
+            <p>no reciptes found</p>
+        {% endif %}
+        
+    </div>
+
+    
 
 </body>
 </html>
