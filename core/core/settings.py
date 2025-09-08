@@ -34,11 +34,21 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR , 'core' ,'recipes')
 
 
+# setting up email stuff here 
+EMAIL_BACKEND =  'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'amirsoleimani123456789@gmail.com'
+EMAIL_HOST_PASSWORD = 'ocmtsvfmptapqhqp'
+
+
 # Application definition
 
 INSTALLED_APPS = [
     'home',
-    'crud',  
+    'crud',
+    'authentication',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -129,5 +139,7 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_REDIRECT_URL = 'home' # where to go after a succesfull login
-LOGOUT_REDIRECT_URL = 'home' # where to go after a succesfull login
+LOGIN_REDIRECT_URL = '/' # where to go after a succesfull login
+LOGOUT_REDIRECT_URL = '/' # where to go after a succesfull login
+
+
