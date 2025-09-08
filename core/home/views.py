@@ -200,7 +200,6 @@ def login_page(request):
     return render(request , "login.html")
 
 
-
 def register_page(request):
     if request.method == 'POST':
         try:
@@ -212,7 +211,7 @@ def register_page(request):
                 return redirect('register')
             user_obj = User.objects.create(username=username)
             user_obj.set_password(password)
-            user_obj.save()
+            user_obj.save(commit=)
             messages.success(request , 'account created!')
             return redirect("login")
         except Exception as e:

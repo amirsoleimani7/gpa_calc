@@ -3,15 +3,6 @@ from .models import Recipe
 from django.contrib import messages
 
 
-# TODO : adding a reipe 
-# TODO : deleting a recipe 
-# TODO : updating a recipe
-
-
-
-
-
-
 
 def main_page(request):
 
