@@ -48,14 +48,9 @@ def main_page(request):
                 all_reciptes = Recipe.objects.filter(recipe_name__icontains=search_item)
 
 
-
-
-
     except Exception as e: 
         messages.error(request , f"some error happend  : {e}")
         print(f"the error is : {e}")
-
-
 
     context = {
         'all_reciptes' : all_reciptes
@@ -64,8 +59,9 @@ def main_page(request):
     return render(request , 'main_page_reciptes.html' , context)
 
 
+def delete_recipe(request , pk):
+    query_recipe = get_object_or_404(Recipe , pk=pk)
+    query_recipe.delete()
 
-
-
-
+    return redirect('main_page')
 

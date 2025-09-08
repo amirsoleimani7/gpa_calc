@@ -42,7 +42,8 @@
         {% for recipe in all_reciptes %} <br>
             <img src="{{ recipe.recipe_image.url }} " alt="not found!" width="200px" height="200px"> <br>
             <b>{{recipe.recipe_name}}</b> <br>
-            {{recipe.recipe_description}}
+            {{recipe.recipe_description}} <br>
+            <a href="{% url 'delete_recipe' recipe.pk %}">delete</a>
         {% endfor %}
         {% else %}
             <p>no reciptes found</p>
